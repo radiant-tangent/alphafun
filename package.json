@@ -1,0 +1,15 @@
+{
+  "name": "alphafun",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A daily word-guessing game. Guess the word of the day; each guess reveals where it sits alphabetically.",
+  "scripts": {
+    "serve": "node test/serve.cjs 8080",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "node --test test/unit/*.test.js",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0"
+  }
+}
