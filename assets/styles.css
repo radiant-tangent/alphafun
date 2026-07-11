@@ -1,0 +1,231 @@
+:root {
+  --bg: #fafafa;
+  --fg: #1c1c1c;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --before: #eef2ff;
+  --after: #ecfdf5;
+  --win: #16a34a;
+  --gaveup: #b45309;
+  --border: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 3rem;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  line-height: 1.4;
+}
+
+#container {
+  max-width: 32rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  display: inline-block;
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.puzzleno {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.nextgame {
+  font-variant-numeric: tabular-nums;
+}
+
+.instructions {
+  margin: 1rem auto;
+  max-width: 26rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.datepicker,
+.difficulty {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.playdate {
+  font-weight: 600;
+}
+
+.randomday,
+.giveup {
+  color: var(--accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.randomday:hover,
+.giveup:hover {
+  text-decoration: underline;
+}
+
+.difficulty .label {
+  color: var(--muted);
+}
+
+.difficulty-toggle {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--fg);
+  font: inherit;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.difficulty-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.board {
+  display: block;
+  width: 100%;
+}
+
+.guesslist {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 20rem;
+}
+
+.guesslist li {
+  padding: 0.35rem 0.75rem;
+  margin: 0.2rem auto;
+  border-radius: 0.5rem;
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.after-guesses li {
+  background: var(--after);
+}
+
+.before-guesses li {
+  background: var(--before);
+}
+
+.target {
+  margin: 0.6rem auto;
+  max-width: 20rem;
+}
+
+.answer {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border: 2px dashed var(--border);
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+}
+
+.target.won .answer {
+  border-style: solid;
+  border-color: var(--win);
+  color: var(--win);
+  letter-spacing: normal;
+}
+
+.target.gaveup .answer {
+  border-style: solid;
+  border-color: var(--gaveup);
+  color: var(--gaveup);
+  letter-spacing: normal;
+}
+
+#guesser {
+  margin-top: 1.25rem;
+}
+
+#new-guess {
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+#new-guess:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+#submit-guess {
+  margin-top: 0.6rem;
+  padding: 0.55rem 1.4rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#submit-guess:hover {
+  filter: brightness(1.05);
+}
+
+.error {
+  margin: 0.6rem auto 0;
+  max-width: 20rem;
+  color: #dc2626;
+  font-size: 0.9rem;
+}
+
+.guesscount {
+  margin: 0.75rem 0 0.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.result {
+  margin-top: 1.5rem;
+  font-size: 1.05rem;
+}
+
+.result.win strong {
+  color: var(--win);
+}
+
+.result.gaveup strong {
+  color: var(--gaveup);
+}

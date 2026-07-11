@@ -1,0 +1,14 @@
+# AlphaFun is a fully static site. No PHP or MySQL are used.
+# This file only enables gzip compression, which matters because
+# dictionary.js is ~3.9 MB uncompressed (about half that gzipped).
+# Safe to delete if your server compresses assets globally.
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript
+</IfModule>
+
+# Ensure correct content types (usually the defaults already, kept for safety).
+<IfModule mod_mime.c>
+  AddType text/javascript .js
+  AddType text/css .css
+</IfModule>

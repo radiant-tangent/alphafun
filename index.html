@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>alphafun</title>
+  <meta
+    name="description"
+    content="Guess the word of the day. Each guess reveals where the word sits alphabetically."
+  />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div id="container">
+    <a href="/" class="title">alphafun</a>
+    <span class="puzzleno"
+      >puzzle #{{ puzzleNumber }} •
+      <span id="nextgame"
+        ><span class="nextgame">{{ timeUntilNextGame }} left</span></span
+      ></span
+    >
+
+    <div class="instructions">
+      <p>
+        Guess the word of the day. Each guess reveals where the word sits
+        alphabetically.
+      </p>
+    </div>
+
+    <div class="controls">
+      <div class="datepicker">
+        <span class="playdate">{{ getShortDayString() }}</span>
+        <a href="#" class="randomday" @click="randomDay">random day</a>
+      </div>
+      <div class="difficulty">
+        <span class="label">difficulty:</span>
+        <button type="button" class="difficulty-toggle" @click="toggleDifficulty">
+          {{ difficulty || 'normal' }}
+        </button>
+      </div>
+    </div>
+
+    <center>
+      <div class="board">
+        <ul class="guesslist after-guesses">
+          <li v-for="g in afterGuesses" :key="'a-' + g">{{ g }}</li>
+        </ul>
+
+        <div
+          class="target"
+          :class="{ won: !!winTime, gaveup: !!gaveUpTime }"
+        >
+          <span v-if="winTime || gaveUpTime" class="answer">{{ word }}</span>
+          <span v-else class="answer hidden">? ? ?</span>
+        </div>
+
+        <ul class="guesslist before-guesses">
+          <li v-for="g in beforeGuesses" :key="'b-' + g">{{ g }}</li>
+        </ul>
+
+        <div id="guesser" v-if="!winTime && !gaveUpTime">
+          <form
+            name="guesser"
+            autocomplete="off"
+            autocorrect="off"
+            @submit.prevent="makeGuess"
+          >
+            <div>
+              <input
+                id="new-guess"
+                v-model="guessValue"
+                v-focus
+                @input="setGuess"
+                placeholder="Guess an English word"
+                type="text"
+                autocomplete="new-password"
+                autocorrect="off"
+              /><br />
+              <input id="submit-guess" type="submit" value="Guess" />
+            </div>
+            <p class="error" v-if="guessError">{{ guessError }}</p>
+          </form>
+          <p class="guesscount" v-if="guesses.length">
+            {{ guesses.length }}
+            {{ guesses.length === 1 ? 'guess' : 'guesses' }}
+          </p>
+          <a
+            href="#"
+            class="giveup"
+            v-if="guesses.length"
+            @click="giveUp"
+            >give up</a
+          >
+        </div>
+
+        <div class="result win" v-if="winTime">
+          <p>You got it! The word was <strong>{{ word }}</strong>.</p>
+          <p v-if="startTime">
+            Solved in {{ guesses.length }}
+            {{ guesses.length === 1 ? 'guess' : 'guesses' }}
+            <span v-if="getFormattedTime(winTime - startTime)"
+              >&bull; {{ getFormattedTime(winTime - startTime) }}</span
+            >.
+          </p>
+        </div>
+        <div class="result gaveup" v-else-if="gaveUpTime">
+          <p>You gave up. The word was <strong>{{ word }}</strong>.</p>
+        </div>
+      </div>
+    </center>
+  </div>
+  <br />
+  <script src="assets/vue.global.prod.js"></script>
+  <script src="dictionary.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
