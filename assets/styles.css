@@ -113,72 +113,53 @@ body {
 .board {
   display: block;
   width: 100%;
+  margin-top: 1.25rem;
+}
+
+.bracket-label {
+  margin: 1.25rem 0 0.5rem;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.bracket-label em {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--fg);
 }
 
 .guesslist {
   list-style: none;
   margin: 0 auto;
   padding: 0;
-  max-width: 20rem;
+  max-width: 22rem;
 }
 
 .guesslist li {
-  padding: 0.35rem 0.75rem;
-  margin: 0.2rem auto;
-  border-radius: 0.5rem;
-  font-size: 1.05rem;
+  padding: 0.15rem 0;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 
-.after-guesses li {
-  background: var(--after);
-}
-
-.before-guesses li {
-  background: var(--before);
-}
-
-.target {
-  margin: 0.6rem auto;
-  max-width: 20rem;
-}
-
-.answer {
-  display: inline-block;
-  padding: 0.4rem 1rem;
-  border: 2px dashed var(--border);
-  border-radius: 0.5rem;
-  font-size: 1.2rem;
+/* The word nearest the answer is the tightest bound — make it pop. */
+.guesslist li.nearest {
+  color: var(--fg);
   font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--muted);
-}
-
-.target.won .answer {
-  border-style: solid;
-  border-color: var(--win);
-  color: var(--win);
-  letter-spacing: normal;
-}
-
-.target.gaveup .answer {
-  border-style: solid;
-  border-color: var(--gaveup);
-  color: var(--gaveup);
-  letter-spacing: normal;
 }
 
 #guesser {
-  margin-top: 1.25rem;
+  margin: 1rem auto;
+  max-width: 22rem;
 }
 
 #new-guess {
   width: 100%;
-  max-width: 20rem;
-  padding: 0.6rem 0.75rem;
+  padding: 0.75rem 0.9rem;
   border: 1px solid var(--border);
   border-radius: 0.5rem;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   text-align: center;
 }
 
@@ -189,43 +170,67 @@ body {
 }
 
 #submit-guess {
+  width: 100%;
   margin-top: 0.6rem;
-  padding: 0.55rem 1.4rem;
+  padding: 0.75rem 1.4rem;
   border: none;
   border-radius: 0.5rem;
-  background: var(--accent);
+  background: var(--fg);
   color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   cursor: pointer;
 }
 
 #submit-guess:hover {
-  filter: brightness(1.05);
+  background: #000;
 }
 
 .error {
   margin: 0.6rem auto 0;
-  max-width: 20rem;
+  max-width: 22rem;
   color: #dc2626;
   font-size: 0.9rem;
 }
 
-.guesscount {
-  margin: 0.75rem 0 0.25rem;
+.guessmeta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
   color: var(--muted);
   font-size: 0.85rem;
 }
 
 .result {
-  margin-top: 1.5rem;
-  font-size: 1.05rem;
+  margin: 1.25rem auto;
+  font-size: 1rem;
+  color: var(--muted);
 }
 
-.result.win strong {
+.result .reveal {
+  margin: 0 0 0.25rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.result.win .reveal {
   color: var(--win);
 }
 
-.result.gaveup strong {
+.result.gaveup .reveal {
   color: var(--gaveup);
+}
+
+.no-puzzle {
+  margin: 1.5rem auto 0;
+  max-width: 22rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.no-puzzle p {
+  margin: 0.4rem 0;
 }

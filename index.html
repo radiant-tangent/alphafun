@@ -32,30 +32,19 @@
         <span class="playdate">{{ getShortDayString() }}</span>
         <a href="#" class="randomday" @click="randomDay">random day</a>
       </div>
-      <div class="difficulty">
-        <span class="label">difficulty:</span>
-        <button type="button" class="difficulty-toggle" @click="toggleDifficulty">
-          {{ difficulty || 'normal' }}
-        </button>
-      </div>
     </div>
 
-    <center>
-      <div class="board">
+    <div class="board">
+      <template v-if="puzzleAvailable">
+        <p class="bracket-label after-label" v-if="afterGuesses.length">
+          Today's word comes <em>after</em>
+        </p>
         <ul class="guesslist after-guesses">
-          <li v-for="g in afterGuesses" :key="'a-' + g">{{ g }}</li>
-        </ul>
-
-        <div
-          class="target"
-          :class="{ won: !!winTime, gaveup: !!gaveUpTime }"
-        >
-          <span v-if="winTime || gaveUpTime" class="answer">{{ word }}</span>
-          <span v-else class="answer hidden">? ? ?</span>
-        </div>
-
-        <ul class="guesslist before-guesses">
-          <li v-for="g in beforeGuesses" :key="'b-' + g">{{ g }}</li>
+          <li
+            v-for="(g, i) in afterGuesses"
+            :key="'a-' + g"
+            :class="{ nearest: i === afterGuesses.length - 1 }"
+          >{{ g }}</li>
         </ul>
 
         <div id="guesser" v-if="!winTime && !gaveUpTime">
@@ -65,49 +54,63 @@
             autocorrect="off"
             @submit.prevent="makeGuess"
           >
-            <div>
-              <input
-                id="new-guess"
-                v-model="guessValue"
-                v-focus
-                @input="setGuess"
-                placeholder="Guess an English word"
-                type="text"
-                autocomplete="new-password"
-                autocorrect="off"
-              /><br />
-              <input id="submit-guess" type="submit" value="Guess" />
-            </div>
+            <input
+              id="new-guess"
+              v-model="guessValue"
+              v-focus
+              @input="setGuess"
+              placeholder="Guess an English word"
+              type="text"
+              autocomplete="new-password"
+              autocorrect="off"
+            />
+            <input id="submit-guess" type="submit" value="Guess" />
             <p class="error" v-if="guessError">{{ guessError }}</p>
           </form>
-          <p class="guesscount" v-if="guesses.length">
-            {{ guesses.length }}
-            {{ guesses.length === 1 ? 'guess' : 'guesses' }}
-          </p>
-          <a
-            href="#"
-            class="giveup"
-            v-if="guesses.length"
-            @click="giveUp"
-            >give up</a
-          >
+          <div class="guessmeta" v-if="guesses.length">
+            <span class="guesscount">
+              {{ guesses.length }}
+              {{ guesses.length === 1 ? 'guess' : 'guesses' }}
+            </span>
+            <a href="#" class="giveup" @click="giveUp">give up</a>
+          </div>
         </div>
 
-        <div class="result win" v-if="winTime">
-          <p>You got it! The word was <strong>{{ word }}</strong>.</p>
-          <p v-if="startTime">
-            Solved in {{ guesses.length }}
-            {{ guesses.length === 1 ? 'guess' : 'guesses' }}
-            <span v-if="getFormattedTime(winTime - startTime)"
-              >&bull; {{ getFormattedTime(winTime - startTime) }}</span
-            >.
+        <div class="result win" v-else-if="winTime">
+          <p class="reveal">{{ word }}</p>
+          <p>
+            You got it in {{ guesses.length }}
+            {{ guesses.length === 1 ? 'guess' : 'guesses' }}<span
+              v-if="getFormattedTime(winTime - startTime)"
+            > &bull; {{ getFormattedTime(winTime - startTime) }}</span>.
           </p>
         </div>
-        <div class="result gaveup" v-else-if="gaveUpTime">
-          <p>You gave up. The word was <strong>{{ word }}</strong>.</p>
+        <div class="result gaveup" v-else>
+          <p class="reveal">{{ word }}</p>
+          <p>You gave up. That was the word.</p>
         </div>
+
+        <p class="bracket-label before-label" v-if="beforeGuesses.length">
+          Today's word comes <em>before</em>
+        </p>
+        <ul class="guesslist before-guesses">
+          <li
+            v-for="(g, i) in beforeGuesses"
+            :key="'b-' + g"
+            :class="{ nearest: i === 0 }"
+          >{{ g }}</li>
+        </ul>
+      </template>
+
+      <div class="no-puzzle" v-else>
+        <p>No puzzle available for this date.</p>
+        <p>
+          Pick
+          <a href="#" class="randomday" @click="randomDay">another day</a>
+          to keep playing.
+        </p>
       </div>
-    </center>
+    </div>
   </div>
   <br />
   <script src="assets/vue.global.prod.js"></script>
